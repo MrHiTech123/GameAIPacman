@@ -97,18 +97,21 @@ void UGhostComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 void UGhostComponent::SelectNewDestinationTile()
 {
+	FVector2D currentTile = MyMovementComponent->GetCurrentTile();
 	switch (State)
 	{
 	case GhostState::WANDER:
-		NextDirection = Wander();
+		NextDirection = Wander(currentTile);
 		break;
+	case GhostState::FLEE:
+		NextDirection = Wander(currentTile);
 	}
-
-	NextTile = MyMovementComponent->GetCurrentTile() + NextDirection;
+	
+	NextTile = currentTile + NextDirection;
 	UE_LOG(LogTemp, Display, TEXT("Selected destination tile: %f %f"),NextTile.X, NextTile.Y )
 }
 
-FVector2D UGhostComponent::Wander ()
+FVector2D UGhostComponent::Wander (FVector2D currentTile)
 {
 	// pick random direction
 	int direction = FMath::RandRange(0,3);
@@ -130,24 +133,26 @@ FVector2D UGhostComponent::Wander ()
 		directionVector.Y=-1;
 		break;
 	}
+	
+	
 
 	return directionVector;
 	
 }
 
-FVector2D UGhostComponent::Chase()
+FVector2D UGhostComponent::Chase(FVector2D currentTile)
 {
 	FVector2D directionVector(0,0);
 	return directionVector;
 }
 
-FVector2D UGhostComponent::Flee()
+FVector2D UGhostComponent::Flee(FVector2D currentTile)
 {
 	FVector2D directionVector(0,0);
 	return directionVector;
 }
 
-FVector2D UGhostComponent::Patrol()
+FVector2D UGhostComponent::Patrol(FVector2D currentTile)
 {
 	FVector2D directionVector(0,0);
 	return directionVector;

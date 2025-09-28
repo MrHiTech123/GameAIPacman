@@ -16,6 +16,14 @@ enum class GhostState : uint8 {
 	FLEE = 3 UMETA(DisplayName = "Flee")
 };
 
+UENUM(BlueprintType)
+enum class GhostType : uint8 {
+	BLINKY = 0 UMETA(DisplayName = "Blinky"),
+	CLYDE = 1 UMETA(DisplayName = "Clyde"),
+	PINKY = 2 UMETA(DisplayName = "Pinky"),
+	INKY = 3 UMETA(DisplayName = "Inky")
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PACMANF25_API UGhostComponent : public UActorComponent
 {
@@ -59,9 +67,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	FVector2D Wander();  
-	FVector2D Chase();
-	FVector2D Patrol();
+	FVector2D Wander(FVector2D currentTile);  
+	FVector2D Chase(FVector2D currentTile);
+	FVector2D Patrol(FVector2D currentTile);
 	FVector2D Respawn();
-	FVector2D Flee();
+	FVector2D Flee(FVector2D currentTile);
 };
