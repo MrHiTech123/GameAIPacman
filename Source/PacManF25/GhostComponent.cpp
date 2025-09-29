@@ -123,7 +123,6 @@ bool UGhostComponent::ValidTurn(FVector2D futureVector, FVector2D turn, bool all
 }
 
 FVector2D directionVector(int direction) {
-	int direction = FMath::RandRange(0,3);
 	FVector2D toReturn(0,0);
 
 	
