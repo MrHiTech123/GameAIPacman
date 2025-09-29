@@ -122,9 +122,7 @@ bool UGhostComponent::ValidTurn(FVector2D futureVector, FVector2D turn, bool all
 		(allowReverse || MyMovementComponent->GetMovementVector().Dot(turn) != -1);
 }
 
-FVector2D UGhostComponent::Wander (FVector2D currentTile)
-{
-	// pick random direction
+FVector2D directionVector(int direction) {
 	int direction = FMath::RandRange(0,3);
 	FVector2D toReturn(0,0);
 
@@ -144,6 +142,14 @@ FVector2D UGhostComponent::Wander (FVector2D currentTile)
 		toReturn.Y=-1;
 		break;
 	}
+	return toReturn;
+}
+
+FVector2D UGhostComponent::Wander (FVector2D currentTile)
+{
+	// pick random direction
+	int direction = FMath::RandRange(0,3);
+	FVector2D toReturn = directionVector(direction);
 	
 	FVector2D futureVector = currentTile + toReturn;
 	
@@ -166,14 +172,36 @@ FVector2D UGhostComponent::Chase(FVector2D currentTile)
 
 FVector2D UGhostComponent::Flee(FVector2D currentTile)
 {
-	FVector2D directionVector(0,0);
-	return directionVector;
+	return Wander(currentTile);
+}
+
+FVector2D UGhostComponent::ChaseTile(FVector2D currentTile, FVector2D targetTile) {
+	FVector2D closestDirection(5000, 5000);
+	
+	for (int i = 0; i < 4; ++i) {
+		FVector2D direction = directionVector(i);
+		
+		FVector2D futureTile = currentTile + direction;
+		FVector2D closestFutureTile = currentTile + closestDirection;
+		
+		if (!ValidTurn(futureTile, direction, false)) continue;
+		
+		if (FVector2D::Distance(futureTile, targetTile) < FVector2D::Distance(closestFutureTile, targetTile)) {
+			closestDirection = direction;
+		}
+	}
+	
+	return closestDirection;
+	
+	
 }
 
 FVector2D UGhostComponent::Patrol(FVector2D currentTile)
 {
-	FVector2D directionVector(0,0);
-	return directionVector;
+	FVector2D pacmanPos(0, 0);
+	
+	
+	return pacmanPos;
 }
 
 bool UGhostComponent::IsAtDestination()

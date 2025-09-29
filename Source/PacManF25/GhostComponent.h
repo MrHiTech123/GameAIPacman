@@ -53,6 +53,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D NextDirection;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector2D Home;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AActor* pacman;
+	
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -76,6 +82,7 @@ public:
 	FVector2D Wander(FVector2D currentTile);  
 	FVector2D Chase(FVector2D currentTile);
 	FVector2D Patrol(FVector2D currentTile);
+	FVector2D ChaseTile(FVector2D currentTile, FVector2D targetTile);
 	FVector2D Respawn();
 	FVector2D Flee(FVector2D currentTile);
 	
