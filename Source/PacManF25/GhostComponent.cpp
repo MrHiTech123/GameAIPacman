@@ -2,6 +2,7 @@
 
 
 #include "GhostComponent.h"
+#include <Kismet/GameplayStatics.h>
 
 #include "AI/NavigationSystemBase.h"
 
@@ -18,6 +19,9 @@ UGhostComponent::UGhostComponent()
 
 }
 
+AMazeTemp* UGhostComponent::GetMazeTemp() {
+	return (AMazeTemp*)UGameplayStatics::GetActorOfClass(GetWorld(), AMazeTemp::StaticClass());
+}
 
 // Called when the game starts
 void UGhostComponent::BeginPlay()
@@ -26,6 +30,8 @@ void UGhostComponent::BeginPlay()
 
 	// get reference to movement component
 	MyMovementComponent = GetOwner()->GetComponentByClass<UPacmanMovementComponent>();
+	
+	mazeTemp = GetMazeTemp();
 	
 	
 	if (IsValid(MyMovementComponent))
@@ -111,32 +117,44 @@ void UGhostComponent::SelectNewDestinationTile()
 	UE_LOG(LogTemp, Display, TEXT("Selected destination tile: %f %f"),NextTile.X, NextTile.Y )
 }
 
+bool UGhostComponent::ValidTurn(FVector2D futureVector, FVector2D turn, bool allowReverse) {
+	return mazeTemp->GetData(futureVector[0], futureVector[1]) == EMPTY_TILE && 
+		(allowReverse || MyMovementComponent->GetMovementVector().Dot(turn) != -1);
+}
+
 FVector2D UGhostComponent::Wander (FVector2D currentTile)
 {
 	// pick random direction
 	int direction = FMath::RandRange(0,3);
-	FVector2D directionVector(0,0);
+	FVector2D toReturn(0,0);
 
 	
 	switch (direction)
 	{
 	case 0:
-		directionVector.X=1;
+		toReturn.X=1;
 		break;
 	case 1:
-		directionVector.X=-1;
+		toReturn.X=-1;
 		break;
 	case 2:
-		directionVector.Y=1;
+		toReturn.Y=1;
 		break;
 	case 3:
-		directionVector.Y=-1;
+		toReturn.Y=-1;
 		break;
 	}
 	
+	FVector2D futureVector = currentTile + toReturn;
 	
-
-	return directionVector;
+	if (ValidTurn(futureVector, toReturn, false)) {
+		return toReturn;
+	}
+	
+	else {
+		return Wander(currentTile);
+	}
+	
 	
 }
 

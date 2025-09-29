@@ -32,6 +32,10 @@ void UPacmanMovementComponent::SetMovementVector(FVector2D input)
 	MovementVector = input;
 }
 
+FVector2D UPacmanMovementComponent::GetMovementVector() {
+	return MovementVector;
+}
+
 void UPacmanMovementComponent::UpdateMovement(FVector2D input, bool allowReverse)
 {
 	AActor* actor = GetOwner();
@@ -82,6 +86,7 @@ void UPacmanMovementComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		float yaw = FMath::Atan2(MovementVector.Y,MovementVector.X);
 		actor->SetActorRotation(FRotator(0,FMath::RadiansToDegrees(yaw),0));
 	}
+	
 
 	
 }

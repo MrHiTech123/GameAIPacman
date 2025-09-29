@@ -44,9 +44,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Movement")
 	void SetMovementVector (FVector2D input);
+	
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void UpdateMovement(FVector2D input, bool allowReverse);
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	bool IsMoving();
+	
+	FVector2D GetMovementVector();
 };

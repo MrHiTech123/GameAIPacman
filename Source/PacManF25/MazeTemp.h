@@ -46,6 +46,7 @@ public:
 	void Generate();
 	
 	int LoadTilemap();
+	int GetData(int row, int col);
 	void LoadTileset();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

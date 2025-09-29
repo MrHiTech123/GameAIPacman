@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "MazeTemp.h"
 
 #include "PacmanMovementComponent.h"
 #include "GhostComponent.generated.h"
@@ -57,6 +58,11 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPacmanMovementComponent* MyMovementComponent;
+	AMazeTemp* mazeTemp;
+	
+	const int EMPTY_TILE = 0;
+	
+	bool ValidTurn(FVector2D futureVector, FVector2D turn, bool allowReverse);
 public:
 	
 	UFUNCTION()
@@ -72,4 +78,6 @@ public:
 	FVector2D Patrol(FVector2D currentTile);
 	FVector2D Respawn();
 	FVector2D Flee(FVector2D currentTile);
+	
+	AMazeTemp* GetMazeTemp();
 };

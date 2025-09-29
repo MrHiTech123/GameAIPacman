@@ -111,3 +111,7 @@ void AMazeTemp::Tick(float DeltaTime)
 
 }
 
+int AMazeTemp::GetData(int row, int col) {
+	return Tilemap->GetData(row, col);
+}
+
