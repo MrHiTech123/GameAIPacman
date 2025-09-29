@@ -37,6 +37,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	GhostState State;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	GhostType Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D NextTile;
