@@ -111,6 +111,10 @@ void UGhostComponent::SelectNewDestinationTile()
 		break;
 	case GhostState::FLEE:
 		NextDirection = Wander(currentTile);
+		break;
+	case GhostState::PATROL:
+		NextDirection = Patrol(currentTile);
+		break;
 	}
 	
 	NextTile = currentTile + NextDirection;
@@ -196,11 +200,9 @@ FVector2D UGhostComponent::ChaseTile(FVector2D currentTile, FVector2D targetTile
 }
 
 FVector2D UGhostComponent::Patrol(FVector2D currentTile)
-{
-	FVector2D pacmanPos(0, 0);
-	
-	
-	return pacmanPos;
+{	
+	UE_LOG(LogTemp, Display, TEXT("Patrolling"));
+	return ChaseTile(currentTile, Home);
 }
 
 bool UGhostComponent::IsAtDestination()
