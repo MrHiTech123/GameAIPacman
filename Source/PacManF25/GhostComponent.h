@@ -60,7 +60,13 @@ public:
 	FVector2D Home;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	AActor* pacman;
+	AActor* PacmanActor;
+	UPacmanMovementComponent* Pacman;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AActor* BlinkyActor;
+	UPacmanMovementComponent* Blinky;
+	
 	
 protected:
 	// Called when the game starts
