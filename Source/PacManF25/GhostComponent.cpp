@@ -33,6 +33,11 @@ void UGhostComponent::BeginPlay()
 	
 	mazeTemp = GetMazeTemp();
 	
+	if (IsValid(PacmanActor)) {
+		Pacman = PacmanActor->GetComponentByClass<UPacmanMovementComponent>();
+	}
+	
+	
 	
 	if (IsValid(MyMovementComponent))
 	{
