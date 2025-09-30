@@ -51,8 +51,8 @@ void UGhostComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	FVector location = GetOwner()->GetActorLocation();
-	FVector2D movement;
-	FVector2D currentTile;
+	FVector2D movement(0, 0);
+	FVector2D currentTile(0, 0);
 	if (IsValid(MyMovementComponent))
 	{
 		movement=MyMovementComponent->MovementVector;
@@ -188,14 +188,13 @@ FVector2D UGhostComponent::ChaseBlinkyStyle(FVector2D currentTile) {
 }
 
 FVector2D UGhostComponent::ChaseClydeStyle(FVector2D currentTile) {
-	// int distance = (PacmanTile() - currentTile).Length();
-	// if (distance < 8) {
-	// 	return ChaseTile(currentTile, Home);
-	// }
-	// else {
-	// 	return ChaseTile(currentTile, PacmanTile());
-	// }
-	return FVector2D(0, 1);
+	int distance = (PacmanTile() - currentTile).Length();
+	if (distance < 8) {
+		return ChaseTile(currentTile, Home);
+	}
+	else {
+		return ChaseTile(currentTile, PacmanTile());
+	}
 }
 FVector2D UGhostComponent::ChasePinkyStyle(FVector2D currentTile) {
     FVector2D target = PacmanTile() + (4 * PacmanDirection());
