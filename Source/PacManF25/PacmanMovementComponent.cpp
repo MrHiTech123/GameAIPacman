@@ -78,6 +78,19 @@ void UPacmanMovementComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 	FVector move = FVector(MovementVector.X, MovementVector.Y, 0) * MaxSpeed * DeltaTime;
 	FVector newLocation = location + move;
+	
+	float maxDist = TileSize.Y * 28;
+	
+	if (newLocation.Y > maxDist) {
+		newLocation.Y = 0;
+	}
+	if (newLocation.Y < 0) {
+		newLocation.Y = maxDist;
+	}
+	
+	
+	
+	
 	actor->SetActorLocation(newLocation);
 
 	// if moving, orient to direction of movement
