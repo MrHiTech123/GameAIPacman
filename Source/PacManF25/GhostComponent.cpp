@@ -33,17 +33,6 @@ void UGhostComponent::BeginPlay()
 	
 	mazeTemp = GetMazeTemp();
 	
-	UE_LOG(LogTemp, Display, TEXT("Start valid"));
-	if (IsValid(PacmanActor)) {
-		Pacman = PacmanActor->GetComponentByClass<UPacmanMovementComponent>();
-		FVector2D test = Pacman->GetCurrentTile();
-	}
-	
-	if (IsValid(BlinkyActor)) {
-		Blinky = BlinkyActor->GetComponentByClass<UPacmanMovementComponent>();
-		FVector2D test = Blinky->GetCurrentTile();
-	}
-	UE_LOG(LogTemp, Display, TEXT("End Valid"));
 	
 	
 	if (IsValid(MyMovementComponent))
@@ -183,7 +172,10 @@ FVector2D UGhostComponent::Wander (FVector2D currentTile)
 }
 
 FVector2D UGhostComponent::ChaseBlinkyStyle(FVector2D currentTile) {
-    FVector2D pacmanLocation = Pacman->GetCurrentTile();
+	UPacmanMovementComponent* pacMove = Pacman->GetComponentByClass<UPacmanMovementComponent>();
+	if (pacMove == nullptr) return FVector2D(0, 0);
+    
+	FVector2D pacmanLocation = pacMove->GetCurrentTile();
 	
 	GEngine->AddOnScreenDebugMessage(502,30,FColor::Cyan,
 		FString::Printf(
