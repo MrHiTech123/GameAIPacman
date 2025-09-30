@@ -116,7 +116,7 @@ void UGhostComponent::SelectNewDestinationTile()
 		NextDirection = Patrol(currentTile);
 		break;
 	case GhostState::CHASE:
-		NextDirection = Patrol(currentTile);
+		NextDirection = Chase(currentTile);
 		break;
 	}
 	
@@ -184,6 +184,7 @@ FVector2D UGhostComponent::ChaseInkyStyle(FVector2D currentTile) {
 }
 
 FVector2D UGhostComponent::Chase(FVector2D currentTile) {
+	UE_LOG(LogTemp, Display, TEXT("Chasing"));
     switch (Type) {
         case GhostType::BLINKY:
             return ChaseBlinkyStyle(currentTile);
