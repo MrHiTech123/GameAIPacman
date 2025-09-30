@@ -74,7 +74,7 @@ protected:
 	AMazeTemp* mazeTemp;
 	
 	const int EMPTY_TILE = 0;
-	const int TIME_UNTIL_CHASE = 5;
+	const int TIME_UNTIL_CHASE = 30;
 	
 	float timePassed = 0;
 	

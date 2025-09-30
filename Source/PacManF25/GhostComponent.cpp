@@ -58,7 +58,19 @@ void UGhostComponent::BeginPlay()
 void UGhostComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	
+	
+	timePassed += DeltaTime;
+	if (timePassed > TIME_UNTIL_CHASE) {
+		State = GhostState::CHASE;
+	}
+	else {
+		State = GhostState::PATROL;
+	}
+	
+	
+	
+	
 	FVector location = GetOwner()->GetActorLocation();
 	FVector2D movement(0, 0);
 	FVector2D currentTile(0, 0);
