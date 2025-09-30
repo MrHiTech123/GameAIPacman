@@ -74,6 +74,9 @@ protected:
 	AMazeTemp* mazeTemp;
 	
 	const int EMPTY_TILE = 0;
+	const int TIME_UNTIL_CHASE = 5;
+	
+	float timePassed = 0;
 	
 	bool ValidTurn(FVector2D futureVector, FVector2D turn, bool allowReverse);
 public:

@@ -6,6 +6,15 @@
 
 #include "AI/NavigationSystemBase.h"
 
+
+FVector2D GetTile(AActor* actor) {
+	FVector location = actor->GetActorLocation();
+	FVector2D tile;
+	tile.X = FMath::Floor (location.X / 80 );
+	tile.Y = FMath::Floor (location.Y / 80 );
+	return tile;
+}
+
 // Sets default values for this component's properties
 UGhostComponent::UGhostComponent()
 {
@@ -201,7 +210,17 @@ FVector2D UGhostComponent::ChasePinkyStyle(FVector2D currentTile) {
 	return ChaseTile(currentTile, target);
 }
 FVector2D UGhostComponent::ChaseInkyStyle(FVector2D currentTile) {
-    return FVector2D(-1, 0);
+	if (Blinky == nullptr) return FVector2D(0, 0);
+	if (!IsValid(Blinky)) return FVector2D(0, 0);
+	
+	FVector2D twoAheadOfPacman = PacmanTile() + (PacmanDirection() * 2);
+	
+	FVector2D blinkyDistance = twoAheadOfPacman - GetTile(Blinky);
+	
+	FVector2D target = GetTile(Blinky) + (blinkyDistance * 2);
+	
+	return ChaseTile(currentTile, target);
+	
 }
 
 FVector2D UGhostComponent::Chase(FVector2D currentTile) {
