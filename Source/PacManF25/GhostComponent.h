@@ -84,6 +84,11 @@ public:
 
 	FVector2D Wander(FVector2D currentTile);  
 	FVector2D Chase(FVector2D currentTile);
+    FVector2D ChaseBlinkyStyle(FVector2D currentTile);
+    FVector2D ChaseClydeStyle(FVector2D currentTile);
+    FVector2D ChasePinkyStyle(FVector2D currentTile);
+    FVector2D ChaseInkyStyle(FVector2D currentTile);
+	
 	FVector2D Patrol(FVector2D currentTile);
 	FVector2D ChaseTile(FVector2D currentTile, FVector2D targetTile);
 	FVector2D Respawn();

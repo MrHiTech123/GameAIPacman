@@ -115,6 +115,9 @@ void UGhostComponent::SelectNewDestinationTile()
 	case GhostState::PATROL:
 		NextDirection = Patrol(currentTile);
 		break;
+	case GhostState::CHASE:
+		NextDirection = Patrol(currentTile);
+		break;
 	}
 	
 	NextTile = currentTile + NextDirection;
@@ -167,10 +170,32 @@ FVector2D UGhostComponent::Wander (FVector2D currentTile)
 	
 }
 
-FVector2D UGhostComponent::Chase(FVector2D currentTile)
-{
-	FVector2D directionVector(0,0);
-	return directionVector;
+FVector2D UGhostComponent::ChaseBlinkyStyle(FVector2D currentTile) {
+    return FVector2D(0, -1);
+}
+FVector2D UGhostComponent::ChaseClydeStyle(FVector2D currentTile) {
+	return FVector2D(0, 1);
+}
+FVector2D UGhostComponent::ChasePinkyStyle(FVector2D currentTile) {
+    return FVector2D(1, 0);
+}
+FVector2D UGhostComponent::ChaseInkyStyle(FVector2D currentTile) {
+    return FVector2D(-1, 0);
+}
+
+FVector2D UGhostComponent::Chase(FVector2D currentTile) {
+    switch (Type) {
+        case GhostType::BLINKY:
+            return ChaseBlinkyStyle(currentTile);
+        case GhostType::CLYDE:
+            return ChaseClydeStyle(currentTile);
+        case GhostType::PINKY:
+            return ChasePinkyStyle(currentTile);
+        case GhostType::INKY:
+            return ChaseInkyStyle(currentTile);
+        default:
+            return FVector2D(0, 0);
+    }
 }
 
 FVector2D UGhostComponent::Flee(FVector2D currentTile)
