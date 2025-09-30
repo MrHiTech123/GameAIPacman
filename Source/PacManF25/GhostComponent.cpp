@@ -36,12 +36,12 @@ void UGhostComponent::BeginPlay()
 	UE_LOG(LogTemp, Display, TEXT("Start valid"));
 	if (IsValid(PacmanActor)) {
 		Pacman = PacmanActor->GetComponentByClass<UPacmanMovementComponent>();
-		Pacman->GetCurrentTile();
+		FVector2D test = Pacman->GetCurrentTile();
 	}
 	
 	if (IsValid(BlinkyActor)) {
 		Blinky = BlinkyActor->GetComponentByClass<UPacmanMovementComponent>();
-		Blinky->GetCurrentTile();
+		FVector2D test = Blinky->GetCurrentTile();
 	}
 	UE_LOG(LogTemp, Display, TEXT("End Valid"));
 	
@@ -183,9 +183,15 @@ FVector2D UGhostComponent::Wander (FVector2D currentTile)
 }
 
 FVector2D UGhostComponent::ChaseBlinkyStyle(FVector2D currentTile) {
-	return FVector2D(0, -1);
-
+    FVector2D pacmanLocation = Pacman->GetCurrentTile();
+	
+	GEngine->AddOnScreenDebugMessage(502,30,FColor::Cyan,
+		FString::Printf(
+			TEXT("PACMAN LOCATION: %f %f"), pacmanLocation[0], pacmanLocation[1]));
+	
+    return ChaseTile(currentTile, pacmanLocation);
 }
+
 FVector2D UGhostComponent::ChaseClydeStyle(FVector2D currentTile) {
 	return FVector2D(0, 1);
 }
