@@ -7,6 +7,8 @@
 #include "PacmanMovementComponent.generated.h"
 
 
+UPacmanMovementComponent* PACMAN_INSTANCE = nullptr;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PACMANF25_API UPacmanMovementComponent : public UActorComponent
 {

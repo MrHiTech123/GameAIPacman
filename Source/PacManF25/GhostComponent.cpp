@@ -171,24 +171,35 @@ FVector2D UGhostComponent::Wander (FVector2D currentTile)
 	
 }
 
+FVector2D PacmanTile() {
+	if (PACMAN_INSTANCE == nullptr) return FVector2D(1000, -1000);
+	return PACMAN_INSTANCE->GetCurrentTile();
+}
+
+FVector2D PacmanDirection() {
+	if (PACMAN_INSTANCE == nullptr) return FVector2D(0, 0);
+	return PACMAN_INSTANCE->MovementVector;
+}
+
 FVector2D UGhostComponent::ChaseBlinkyStyle(FVector2D currentTile) {
-	UPacmanMovementComponent* pacMove = Pacman->GetComponentByClass<UPacmanMovementComponent>();
-	if (pacMove == nullptr) return FVector2D(0, 0);
-    
-	FVector2D pacmanLocation = pacMove->GetCurrentTile();
-	
-	GEngine->AddOnScreenDebugMessage(502,30,FColor::Cyan,
-		FString::Printf(
-			TEXT("PACMAN LOCATION: %f %f"), pacmanLocation[0], pacmanLocation[1]));
+	FVector2D pacmanLocation = PacmanTile();
 	
     return ChaseTile(currentTile, pacmanLocation);
 }
 
 FVector2D UGhostComponent::ChaseClydeStyle(FVector2D currentTile) {
+	// int distance = (PacmanTile() - currentTile).Length();
+	// if (distance < 8) {
+	// 	return ChaseTile(currentTile, Home);
+	// }
+	// else {
+	// 	return ChaseTile(currentTile, PacmanTile());
+	// }
 	return FVector2D(0, 1);
 }
 FVector2D UGhostComponent::ChasePinkyStyle(FVector2D currentTile) {
-    return FVector2D(1, 0);
+    FVector2D target = PacmanTile() + (4 * PacmanDirection());
+	return ChaseTile(currentTile, target);
 }
 FVector2D UGhostComponent::ChaseInkyStyle(FVector2D currentTile) {
     return FVector2D(-1, 0);

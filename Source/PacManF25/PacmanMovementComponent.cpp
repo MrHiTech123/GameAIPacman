@@ -24,6 +24,7 @@ void UPacmanMovementComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+	PACMAN_INSTANCE = this;
 	
 }
 
