@@ -37,6 +37,9 @@ void UGhostComponent::BeginPlay()
 		Pacman = PacmanActor->GetComponentByClass<UPacmanMovementComponent>();
 	}
 	
+	if (IsValid(BlinkyActor)) {
+		Blinky = BlinkyActor->GetComponentByClass<UPacmanMovementComponent>();
+	}
 	
 	
 	if (IsValid(MyMovementComponent))
