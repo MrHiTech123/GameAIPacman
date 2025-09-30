@@ -201,7 +201,6 @@ FVector2D UGhostComponent::ChaseTile(FVector2D currentTile, FVector2D targetTile
 
 FVector2D UGhostComponent::Patrol(FVector2D currentTile)
 {	
-	UE_LOG(LogTemp, Display, TEXT("Patrolling"));
 	return ChaseTile(currentTile, Home);
 }
 
